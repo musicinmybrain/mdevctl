@@ -329,7 +329,9 @@ impl TestEnvironment {
                 }
                 Err(anyhow!(e))
             }
-            Expect::Pass => Ok(res.unwrap_or_else(|_| panic!("Expected {} to pass", testname))),
+            Expect::Pass => Ok(res.unwrap_or_else(|e| {
+                panic!("Expected {} to pass but result was {:?}", testname, e)
+            })),
         }
     }
 }
